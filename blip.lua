@@ -30,8 +30,8 @@ local Venus = {
 
 Citizen.CreateThread(function()
 
-    for _, info in pairs(Venus) do
-      info.blip = AddBlipForCoord(info.vector3)
+    for _, info in ipairs(Venus) do
+      info.blip = AddBlipForCoord(info.vector3.x, info.vector3.y, info.vector3.z)
       SetBlipSprite(info.blip, info.id)
       SetBlipDisplay(info.blip, 4)
       SetBlipScale(info.blip, info.scale)
@@ -41,4 +41,14 @@ Citizen.CreateThread(function()
       AddTextComponentString(info.title)
       EndTextCommandSetBlipName(info.blip)
     end
+end)
+
+AddEventHandler('onResourceStop', function(resource)
+  if resource ~= GetCurrentResourceName() then return end
+  for _, info in ipairs(Venus) do
+    if info.blip and DoesBlipExist(info.blip) then
+      RemoveBlip(info.blip)
+      info.blip = nil
+    end
+  end
 end)
