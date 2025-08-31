@@ -30,8 +30,8 @@ local Venus = {
 
 Citizen.CreateThread(function()
 
-    for _, info in pairs(Venus) do
-      info.blip = AddBlipForCoord(info.vector3)
+    for _, info in ipairs(Venus) do
+      info.blip = AddBlipForCoord(info.vector3.x, info.vector3.y, info.vector3.z)
       SetBlipSprite(info.blip, info.id)
       SetBlipDisplay(info.blip, 4)
       SetBlipScale(info.blip, info.scale)
